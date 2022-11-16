@@ -88,6 +88,8 @@ public class BookBuyerAgent extends Agent {
 		private MessageTemplate mt;
 		private int step = 0;
 
+		private int budget = 10; // agent's budget
+
 		public void action() {
 			switch (step) {
 				case 0:
@@ -111,10 +113,15 @@ public class BookBuyerAgent extends Agent {
 						if (reply.getPerformative() == ACLMessage.PROPOSE) {
 							//proposal received
 							int price = Integer.parseInt(reply.getContent());
-							if (bestSeller == null || price < bestPrice) {
+							if (bestSeller == null || price < bestPrice ) {
 								//the best proposal as for now
 								bestPrice = price;
 								bestSeller = reply.getSender();
+
+								if(budget < bestPrice){
+									System.out.println(getAID().getLocalName() + ": NOT ENOUGH BUDGET. Need " + bestPrice + ", but left " + budget + "only");
+									step = 4;
+								}
 							}
 						}
 						repliesCnt++;
@@ -145,6 +152,9 @@ public class BookBuyerAgent extends Agent {
 					if (reply != null) {
 						if (reply.getPerformative() == ACLMessage.INFORM) {
 							//purchase succeeded
+
+							budget = budget - bestPrice;
+
 							System.out.println(getAID().getLocalName() + ": " + targetBookTitle + " purchased for " + bestPrice + " from " + reply.getSender().getLocalName());
 							System.out.println(getAID().getLocalName() + ": waiting for the next purchase order.");
 							targetBookTitle = "";

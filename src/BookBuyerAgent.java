@@ -131,7 +131,7 @@ public class BookBuyerAgent extends Agent {
 					break;
 				case 2:
 					if(budget < bestPrice){
-						System.out.println(getAID().getLocalName() + ": NOT ENOUGH BUDGET. Need " + bestPrice + ", but left " + budget + "only");
+						System.out.println(getAID().getLocalName() + ": NOT ENOUGH BUDGET. Need " + bestPrice + ", but left " + budget + " only");
 						step = 4;
 					}else{
 						//best proposal consumption - purchase

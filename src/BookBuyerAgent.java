@@ -157,6 +157,7 @@ public class BookBuyerAgent extends Agent {
 
 							System.out.println(getAID().getLocalName() + ": " + targetBookTitle + " purchased for " + bestPrice + " from " + reply.getSender().getLocalName());
 							System.out.println(getAID().getLocalName() + ": waiting for the next purchase order.");
+							System.out.println(getAID().getLocalName() + "Left " + budget + " in budget");
 							targetBookTitle = "";
 							//myAgent.doDelete();
 						}

@@ -17,8 +17,10 @@ public class BookBuyerAgent extends Agent {
 
 	//list of found sellers
 	private AID[] sellerAgents;
+	private int budget = 100; // agent's budget
 
 	protected void setup() {
+
 		targetBookTitle = "";
 		System.out.println("Hello! " + getAID().getLocalName() + " is ready for the purchase order.");
 		myGui = new BookBuyerGui(this);
@@ -87,8 +89,6 @@ public class BookBuyerAgent extends Agent {
 		private int repliesCnt = 0;
 		private MessageTemplate mt;
 		private int step = 0;
-
-		private int budget = 10; // agent's budget
 
 		public void action() {
 			switch (step) {

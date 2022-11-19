@@ -42,7 +42,7 @@ class BookSellerGui extends JFrame {
 					String price = priceField.getText().trim();
 					String shippingPrice = shippingPriceField.getText().trim();
 
-					myAgent.updateCatalogue(title, Integer.parseInt(price+shippingPrice));
+					myAgent.updateCatalogue(title, Integer.parseInt(price)+Integer.parseInt(shippingPrice));
 
 					titleField.setText("");
 					priceField.setText("");

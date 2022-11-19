@@ -117,11 +117,6 @@ public class BookBuyerAgent extends Agent {
 								//the best proposal as for now
 								bestPrice = price;
 								bestSeller = reply.getSender();
-
-								if(budget < bestPrice){
-									System.out.println(getAID().getLocalName() + ": NOT ENOUGH BUDGET. Need " + bestPrice + ", but left " + budget + "only");
-									step = 4;
-								}
 							}
 						}
 						repliesCnt++;
@@ -135,16 +130,21 @@ public class BookBuyerAgent extends Agent {
 					}
 					break;
 				case 2:
-					//best proposal consumption - purchase
-					ACLMessage order = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
-					order.addReceiver(bestSeller);
-					order.setContent(targetBookTitle);
-					order.setConversationId("book-trade");
-					order.setReplyWith("order"+System.currentTimeMillis());
-					myAgent.send(order);
-					mt = MessageTemplate.and(MessageTemplate.MatchConversationId("book-trade"),
-							MessageTemplate.MatchInReplyTo(order.getReplyWith()));
-					step = 3;
+					if(budget < bestPrice){
+						System.out.println(getAID().getLocalName() + ": NOT ENOUGH BUDGET. Need " + bestPrice + ", but left " + budget + "only");
+						step = 4;
+					}else{
+						//best proposal consumption - purchase
+						ACLMessage order = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
+						order.addReceiver(bestSeller);
+						order.setContent(targetBookTitle);
+						order.setConversationId("book-trade");
+						order.setReplyWith("order"+System.currentTimeMillis());
+						myAgent.send(order);
+						mt = MessageTemplate.and(MessageTemplate.MatchConversationId("book-trade"),
+								MessageTemplate.MatchInReplyTo(order.getReplyWith()));
+						step = 3;
+					}
 					break;
 				case 3:
 					//seller confirms the transaction
